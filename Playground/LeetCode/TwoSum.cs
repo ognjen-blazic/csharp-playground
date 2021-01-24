@@ -34,7 +34,17 @@ namespace LeetCode
     {
         public int[] Result(int[] nums, int target)
         {
-            return new int[] { 0, 1 };
+            int size = nums.Length;
+
+            for (var i = 0; i < size - 1; i++)
+            {
+                for (var j = i + 1; j < size; j++)
+                {
+                    if ((nums[i] + nums[j]) == target) return new int[2] { i, j };
+                }
+            }
+
+            throw new System.Exception("Target not found");
         }
     }
 }
