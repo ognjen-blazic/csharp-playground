@@ -16,6 +16,8 @@ namespace LeetCode
         }
     }
 
+    // add number/enumerable to list method (and vice versa) for testing
+
     /*
         You are given two non-empty linked lists representing two non-negative integers. 
         The digits are stored in reverse order, and each of their nodes contains a single digit.
@@ -48,8 +50,61 @@ namespace LeetCode
     public class AddTwoNumbers
     {
         public ListNode Result(ListNode l1, ListNode l2)
+        {   
+            var sumOverflow = Sum(l1, l2, false);
+            var head = new ListNode(sumOverflow.Item1);
+            var overflow = sumOverflow.Item2;
+
+            var tail = head;
+            var first = l1.next;
+            var second = l2.next;
+
+            
+            while (overflow || first != null || second != null)
+            {
+                sumOverflow = Sum(first, second, sumOverflow.Item2);
+                var node = new ListNode(sumOverflow.Item1);
+                overflow = sumOverflow.Item2;
+
+                tail.next = node;
+                tail = tail.next;
+
+                if (first != null)
+                {
+                    first = first.next;
+                }
+
+                if (second != null)
+                {
+                    second = second.next;
+                }
+            }
+
+            return head;
+        }
+
+        // sum, overflow
+        private Tuple<int, bool> Sum(ListNode first, ListNode second, bool overflow)
         {
-            return null;
+            var sum = 0;
+            if (overflow)
+            {
+                sum += 1;
+            }
+
+            if(first != null)
+            {
+                sum += first.val;
+            }
+
+            if (second != null)
+            {
+                sum += second.val;
+            }
+
+            overflow = sum - 10 >= 0;
+
+            return new Tuple<int, bool>(overflow ? sum - 10 : sum, overflow);
         }
     }
 }
