@@ -57,8 +57,8 @@ namespace LeetCode
             while (first || overflow || l1 != null || l2 != null)
             {
                 var sumAndOverflow = Sum(l1, l2, overflow);
-                var node = new ListNode(sumAndOverflow.Item1);
-                overflow = sumAndOverflow.Item2;
+                var node = new ListNode(sumAndOverflow.Sum);
+                overflow = sumAndOverflow.Overflow;
 
                 if (l1 != null) l1 = l1.next;
                 if (l2 != null) l2 = l2.next;
@@ -78,18 +78,16 @@ namespace LeetCode
             return head;
         }
 
-        // sum, overflow
-        private Tuple<int, bool> Sum(ListNode first, ListNode second, bool overflow)
+        private (int Sum, bool Overflow) Sum(ListNode first, ListNode second, bool overflow)
         {
-            var sum = 0;
-            if (overflow) sum += 1;
+            var sum = Convert.ToInt32(overflow);
             if (first != null) sum += first.val;
             if (second != null) sum += second.val;
 
             var overhead = sum - 10;
             overflow = overhead >= 0;
 
-            return new Tuple<int, bool>(overflow ? overhead : sum, overflow);
+            return (overflow ? overhead : sum, overflow);
         }
     }
 }
