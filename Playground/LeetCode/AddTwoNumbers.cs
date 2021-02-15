@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LeetCode
 {
@@ -50,28 +48,31 @@ namespace LeetCode
     public class AddTwoNumbers
     {
         public ListNode Result(ListNode l1, ListNode l2)
-        {   
-            var sumOverflow = Sum(l1, l2, false);
-            var head = new ListNode(sumOverflow.Item1);
-            var overflow = sumOverflow.Item2;
+        {
+            ListNode head = null;
+            ListNode tail = null;
+            var first = true;
+            var overflow = false;
 
-            var tail = head;
-            var first = l1.next;
-            var second = l2.next;
-
-            
-            while (overflow || first != null || second != null)
+            while (first || overflow || l1 != null || l2 != null)
             {
-                sumOverflow = Sum(first, second, sumOverflow.Item2);
-                var node = new ListNode(sumOverflow.Item1);
-                overflow = sumOverflow.Item2;
+                var sumAndOverflow = Sum(l1, l2, overflow);
+                var node = new ListNode(sumAndOverflow.Item1);
+                overflow = sumAndOverflow.Item2;
+
+                if (l1 != null) l1 = l1.next;
+                if (l2 != null) l2 = l2.next;
+
+                if (first)
+                {
+                    head = node;
+                    tail = head;
+                    first = false;
+                    continue;
+                }
 
                 tail.next = node;
                 tail = tail.next;
-
-                if (first != null) first = first.next;
-
-                if (second != null) second = second.next;
             }
 
             return head;
