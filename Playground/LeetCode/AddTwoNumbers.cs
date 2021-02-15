@@ -69,15 +69,9 @@ namespace LeetCode
                 tail.next = node;
                 tail = tail.next;
 
-                if (first != null)
-                {
-                    first = first.next;
-                }
+                if (first != null) first = first.next;
 
-                if (second != null)
-                {
-                    second = second.next;
-                }
+                if (second != null) second = second.next;
             }
 
             return head;
@@ -87,24 +81,14 @@ namespace LeetCode
         private Tuple<int, bool> Sum(ListNode first, ListNode second, bool overflow)
         {
             var sum = 0;
-            if (overflow)
-            {
-                sum += 1;
-            }
+            if (overflow) sum += 1;
+            if (first != null) sum += first.val;
+            if (second != null) sum += second.val;
 
-            if(first != null)
-            {
-                sum += first.val;
-            }
+            var overhead = sum - 10;
+            overflow = overhead >= 0;
 
-            if (second != null)
-            {
-                sum += second.val;
-            }
-
-            overflow = sum - 10 >= 0;
-
-            return new Tuple<int, bool>(overflow ? sum - 10 : sum, overflow);
+            return new Tuple<int, bool>(overflow ? overhead : sum, overflow);
         }
     }
 }
