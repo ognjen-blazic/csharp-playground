@@ -41,7 +41,24 @@ namespace LeetCode
          */
         public int LengthOfLongestSubstring(string s)
         {
-            return 0;
+            if (s.Length == 0) return 0;
+
+            var substring = new HashSet<char>();
+            var max = 0;
+
+            for(var i = 0; i < s.Length; i++)
+            {
+                var present = substring.Add(s[i]);
+
+                if (!present)
+                {
+                    max = Math.Max(max, substring.Count);
+                    substring.Clear();
+                    substring.Add(s[i]);
+                }
+            }
+
+            return Math.Max(max, substring.Count);
         }
     }
 }

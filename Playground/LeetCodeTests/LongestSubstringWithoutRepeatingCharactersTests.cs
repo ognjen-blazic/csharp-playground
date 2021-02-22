@@ -34,6 +34,13 @@ namespace LeetCodeTests
             var actual = subject.LengthOfLongestSubstring("");
             Assert.AreEqual(0, actual);
         }
+
+        [Test]
+        public void Example5Test()
+        {
+            var actual = subject.LengthOfLongestSubstring("12345");
+            Assert.AreEqual(5, actual);
+        }
     }
 
 }
