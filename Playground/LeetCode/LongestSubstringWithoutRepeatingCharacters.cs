@@ -46,6 +46,7 @@ namespace LeetCode
 
             var substring = new HashSet<char>();
             var max = 0;
+            var stopIndex = 0;
 
             for (var i = 0; i < size; i++)
             {
@@ -53,7 +54,8 @@ namespace LeetCode
                 {
                     max = Math.Max(max, substring.Count);
                     substring.Clear();
-                    substring.Add(s[i]);
+                    substring = new HashSet<char>(s.Substring(++stopIndex, i - stopIndex));
+                    i--;
                 }
             }
 
