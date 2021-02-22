@@ -53,8 +53,7 @@ namespace LeetCode
                 if (!substring.Add(s[i]))
                 {
                     max = Math.Max(max, substring.Count);
-                    substring.Clear();
-                    substring = new HashSet<char>(s.Substring(++stopIndex, i - stopIndex));
+                    substring.Remove(s[stopIndex++]);
                     i--;
                 }
             }
